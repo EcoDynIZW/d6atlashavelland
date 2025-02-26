@@ -1,0 +1,138 @@
+---
+title: "Create landuse shapefiles for d6atlashavelland package" 
+
+author:
+    - name: "Moritz Wenzler-Meya"
+      url: 
+      affiliation: Leibniz Institute for Zoo and Wildlife Research
+      affiliation_url: https://izw-berlin.de/en/
+      orcid_id: 
+date: "`r Sys.Date()`"
+output: 
+    distill::distill_article:
+        highlight: kate
+        code_folding: false  
+        toc: true            
+        toc_depth: 2         
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = "ragg_png", fig.width = 9, fig.height = 6, dpi = 600, retina = 1)
+Sys.setlocale("LC_TIME", "C")
+```
+
+# Setup
+
+```{r packages}
+sapply(list("sf", "tidyverse", "terra", "here"), 
+       library, character.only = TRUE, logical.return = TRUE)
+```
+
+# Data
+
+## extent
+
+```{r}
+großkreuz <- st_as_sf(x = data.frame(y = 52.39606624576463, x = 12.766103593149202),
+                    coords = c("x", "y"),
+                    crs = 4326,
+                    sf_column_name = "geometry")  %>% 
+   st_transform(3035) %>% 
+  mutate(name = "Großkreuz",
+         x = st_coordinates(.)[,1],
+         y = st_coordinates(.)[,2])
+
+großkreuz_buf <- st_buffer(großkreuz, 10000)
+```
+
+
+## landuse
+
+```{r data}
+lu_tab <- d6atlas::landuse_reclass_table
+
+lu_poly <- st_read("T:/wenzler/GeoData/data-raw/brandenburg/landuse_brandenburg_2009_polygons_25833_gpkg/landuse_brandenburg_2009_polygons_25833.gpkg") %>% 
+  dplyr::select("BIOTYP8") %>% 
+  st_transform(3035) %>% 
+  left_join(y = lu_tab, by = "BIOTYP8") %>%
+  dplyr::select(biotoptype, name_class_eng)
+
+lu_line <-
+  sf::st_read("T:/wenzler/GeoData/data-raw/brandenburg/landuse_brandenburg_2009_lines_25833_gpkg/landuse_brandenburg_2009_lines_25833.gpkg"
+  ) %>% 
+  dplyr::select("BIOTYP8") %>% 
+  st_transform(3035) %>% 
+  left_join(y = lu_tab, by = "BIOTYP8") %>% 
+  dplyr::select(biotoptype, name_class_eng)
+
+lu_poly_c <- st_crop(lu_poly, st_bbox(großkreuz_buf))
+
+lu_line_c <- st_crop(lu_line, st_bbox(großkreuz_buf))
+
+unique(lu_poly_c$name_class_eng)
+
+lu_tab %>% 
+  group_by(biotoptype, name_class_eng, Name_Klasse) %>% 
+  summarise()
+
+#  biotoptype name_class_eng Name_Klasse                                       
+#    <chr>      <chr>          <chr>                                             
+#  1 01         river          Fließgewässer                                     
+#  2 02         standing_water Stillgewässer                                     
+#  3 03         ruderal        Anthropogene Rohbodenstandorte und Ruderalfluren  
+#  4 04         peatlands      Moore und Sümpfe                                  
+#  5 05         grassland      Gras- und Staudenfluren                           
+#  6 06         shrubs         Zwergstrauchheiden und Nadelgebüsche              
+#  7 07         hedges         Laubgebüsche, Feldgehölze, Alleen, Baumreihen     
+#  8 08         forest         Wälder und Forste                                 
+#  9 09         agriculture    Äcker                                             
+# 10 10         open_areas     Grün- und Freiflächen                             
+# 11 11         other          Sonderbiotope                                     
+# 12 12         build_areas    bebaute Gebiete, Verkehrsanlagen und Sonderflächen
+
+river_01_poly <- lu_poly_c %>% filter(biotoptype %in% "01")
+standing_water_02_poly <- lu_poly_c %>% filter(biotoptype %in% "02")
+ruderal_03_poly <- lu_poly_c %>% filter(biotoptype %in% "03")
+peatlands_04_poly <- lu_poly_c %>% filter(biotoptype %in% "04")
+grassland_05_poly <- lu_poly_c %>% filter(biotoptype %in% "05")
+shrubs_06_poly <- lu_poly_c %>% filter(biotoptype %in% "06")
+hedges_07_poly <- lu_poly_c %>% filter(biotoptype %in% "07")
+forest_08_poly <- lu_poly_c %>% filter(biotoptype %in% "08")
+agriculture_09_poly <- lu_poly_c %>% filter(biotoptype %in% "09")
+open_areas_10_poly <- lu_poly_c %>% filter(biotoptype %in% "10")
+other_11_poly <- lu_poly_c %>% filter(biotoptype %in% "11")
+build_areas_12_poly <- lu_poly_c %>% filter(biotoptype %in% "12")
+
+river_01_line <- lu_line_c %>% filter(biotoptype %in% "01")
+standing_water_02_line <- lu_line_c %>% filter(biotoptype %in% "02")
+ruderal_03_line <- lu_line_c %>% filter(biotoptype %in% "03")
+peatlands_04_line <- lu_line_c %>% filter(biotoptype %in% "04")
+grassland_05_line <- lu_line_c %>% filter(biotoptype %in% "05")
+shrubs_06_line <- lu_line_c %>% filter(biotoptype %in% "06")
+hedges_07_line <- lu_line_c %>% filter(biotoptype %in% "07")
+forest_08_line <- lu_line_c %>% filter(biotoptype %in% "08")
+agriculture_09_line <- lu_line_c %>% filter(biotoptype %in% "09")
+open_areas_10_line <- lu_line_c %>% filter(biotoptype %in% "10")
+other_11_line <- lu_line_c %>% filter(biotoptype %in% "11")
+build_areas_12_line <- lu_line_c %>% filter(biotoptype %in% "12")
+
+
+```
+
+
+
+
+
+***
+
+<details><summary>Session Info</summary>
+
+```{r sessionInfo}
+## DO NOT REMOVE!
+Sys.time()
+#git2r::repository() ## uncomment if you are using GitHub
+sessionInfo()
+```
+
+</details>
