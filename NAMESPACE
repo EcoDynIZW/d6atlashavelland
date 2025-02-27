@@ -2,7 +2,6 @@
 
 export("%>%")
 export(atlasplot)
-export(stations_data)
 importFrom(colorspace,desaturate)
 importFrom(colorspace,lighten)
 importFrom(dplyr,between)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/atlasplot.R
 \name{atlasplot}
 \alias{atlasplot}
-\title{Plot template map Uckermark (ATLAS experimental area)}
+\title{Plot template map Havelland (ATLAS experimental area)}
 \usage{
 atlasplot(
   color_intensity = 1,
@@ -39,7 +39,7 @@ positions via legend_x and legend_y, Default: 'bottom'}
 A ggplot object containing a template map for the ATLAS-region
 }
 \description{
-plots a template map for the experimental area of the ATLAS system in the Uckermark, Brandenburg
+plots a template map for the experimental area of the ATLAS system in the Havelland, Brandenburg
 }
 \examples{
 \dontrun{

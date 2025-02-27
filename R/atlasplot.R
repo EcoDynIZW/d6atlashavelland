@@ -1,5 +1,5 @@
-#' @title Plot template map Uckermark (ATLAS experimental area)
-#' @description plots a template map for the experimental area of the ATLAS system in the Uckermark, Brandenburg
+#' @title Plot template map Havelland (ATLAS experimental area)
+#' @description plots a template map for the experimental area of the ATLAS system in the Havelland, Brandenburg
 #' @param color_intensity Numeric: control the desaturation of
 #'                        the color intensity, ranging from 0 (fully
 #'                        desaturated) to 1 (fully saturated), Default: 1
@@ -91,53 +91,74 @@ atlasplot <- function(color_intensity = 1,
 
   g <- ggplot2::ggplot() +
     ## agriculture_09 .............................................................
-    ggplot2::geom_sf(data = d6atlas::agriculture_09,
+    ggplot2::geom_sf(data = d6atlashavelland::agriculture_09_poly,
                      fill = col_agriculture,
                      color = col_agriculture,
                      lwd = 0.05,
                      alpha=1)+
     ## ruderal_03 .............................................................
-    ggplot2::geom_sf(data = d6atlas::ruderal_03,
+    ggplot2::geom_sf(data = d6atlashavelland::ruderal_03_poly,
                      fill = col_ruderal,
                      color = col_ruderal,
                      lwd = 0.05)+
-    ## swamp_04 .............................................................
-    ggplot2::geom_sf(data = d6atlas::swamp_04,
+    ## peatland_04 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::peatlands_04_poly,
                      fill = col_ruderal,
                      color = col_ruderal,
                      lwd = 0.05)+
     ## grassland_05 .............................................................
-    ggplot2::geom_sf(data = d6atlas::grassland_05,
+    ggplot2::geom_sf(data = d6atlashavelland::grassland_05_poly,
                      fill = col_grassland,
                      color = col_grassland,
                      lwd = 0.05)+
-    ## bushland_07 .............................................................
-    ggplot2::geom_sf(data = d6atlas::bushland_07,
+    ## hedges_07 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::hedges_07_poly,
+                     fill = col_forest,
+                     color = col_forest,
+                     lwd = 0.05)+
+    ggplot2::geom_sf(data = d6atlashavelland::hedges_07_line,
                      fill = col_forest,
                      color = col_forest,
                      lwd = 0.05)+
     ## forest_08 .............................................................
-    ggplot2::geom_sf(data = d6atlas::forest_08,
+    ggplot2::geom_sf(data = d6atlashavelland::forest_08_poly,
                      fill = col_forest,
                      color = col_forest,
                      lwd = 0.05)+
-    ## garden_graveyard_10 .............................................................
-    ggplot2::geom_sf(data = d6atlas::garden_graveyard_10,
+    ## shrubs_06 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::shrubs_06_poly,
+                     fill = col_forest,
+                     color = col_forest,
+                     lwd = 0.05)+
+    ## open_areas_10 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::open_areas_10_poly,
                      fill = col_grassland,
                      color = col_grassland,
                      lwd = 0.05)+
-    ## built_up_12 .............................................................
-    ggplot2::geom_sf(data = d6atlas::built_up_12,
+    ## build_areas_12 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::build_areas_12_poly,
                      fill = "#948f8d",
                      color = "#948f8d",
                      lwd = 0.05)+
-    ## water_01 .............................................................
-    ggplot2::geom_sf(data = d6atlas::water_01,
+    ggplot2::geom_sf(data = d6atlashavelland::build_areas_12_line,
+                     fill = "#948f8d",
+                     color = "#948f8d",
+                     lwd = 0.05)+
+    ## river_01 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::river_01_poly,
                      fill = col_water,
                      color = col_water,
                      lwd = 0.05)+
-    ## water_02 .............................................................
-    ggplot2::geom_sf(data = d6atlas::water_02,
+    ggplot2::geom_sf(data = d6atlashavelland::river_01_line,
+                     fill = col_water,
+                     color = col_water,
+                     lwd = 0.05)+
+    ## standing_water_02 .............................................................
+    ggplot2::geom_sf(data = d6atlashavelland::standing_water_02_poly,
+                     fill = col_water,
+                     color = col_water,
+                     lwd = 0.05)+
+    ggplot2::geom_sf(data = d6atlashavelland::standing_water_02_line,
                      fill = col_water,
                      color = col_water,
                      lwd = 0.05)+
