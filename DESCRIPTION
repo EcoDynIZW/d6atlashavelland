@@ -1,11 +1,32 @@
 Package: d6atlashavelland
-Title: What the Package Does (One Line, Title Case)
+Title: Template maps for visualizing ecological studies in the BioMove experimental area
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person(given = "Moritz", 
+          family = "Wenzler-Meya", 
+          email = "wenzler@izw-berlin.de", 
+          role = c("aut", "cre"),
+          comment = c(ORCID = "0009-0002-5745-7143"))
+Description: The d6atlashavelland package aims to provide template maps for the BioMove experimental area.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+LazyData: true
+LazyDataCompression: xz
+Imports: 
+    magrittr,
+    ggplot2,
+    sf,
+    dplyr,
+    colorspace,
+    scales,
+    grDevices,
+    ggspatial,
+    terra,
+    readr,
+    usethis
+
+
